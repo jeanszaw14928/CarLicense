@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Owner - Car License Registration System</title>
+    <div th:replace="~{fragments/formlink :: links}"></div>
+</head>
+<body class="py-4 py-md-5">
+
+    <div class="container" style="max-width: 900px;">
+        
+        <!-- Form Container Card -->
+        <div class="form-card">
+            
+            <!-- Card Header -->
+            <div class="form-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h5 mb-1 text-white fw-bold">
+                        <i class="fa-solid fa-user-plus me-2 text-danger"></i>မော်တော်ယာဥ်ပိုင်ရှင်သစ် မှတ်ပုံတင်ရန် ဖောင်
+                    </h1>
+                    <small class="text-white-50" style="font-size: 0.78rem;">Add New Vehicle Owner Registration Form</small>
+                </div>
+                <div class="d-none d-sm-block text-end">
+                    <span class="badge bg-danger px-3 py-2 rounded-pill fw-semibold">
+                        <i class="fa-solid fa-shield-halved me-1"></i> Official Entry
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-4 p-md-5">
+                <form id="ownerRegistrationForm" onsubmit="handleFormSubmit(event)" class="needs-validation" novalidate>
+                    
+                    <!-- SECTION 1: Basic Information -->
+                    <div class="section-title d-flex align-items-center">
+                        <span class="section-badge">1</span>
+                        <span>ပိုင်ရှင်အချက်အလက် (Basic Information)</span>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- Owner Type -->
+                        <div class="col-12 col-md-4">
+                            <label class="form-label">
+                                ပိုင်ရှင်အမျိုးအစား (Owner Type) <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="ownerType" onchange="toggleOwnerTypeFields()" required>
+                                <option value="Individual" selected>တစ်ဦးချင်း (Individual)</option>
+                                <option value="Company">ကုမ္ပဏီ / လုပ်ငန်း (Company / Business)</option>
+                            </select>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" id="nameLabel">
+                                အမည်အပြည့်အစုံ (Full Name) <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="fullName" placeholder="ဥပမာ - ဦးအောင်ကျော်" required>
+                            <div class="invalid-feedback">ကျေးဇူးပြု၍ အမည်ဖြည့်သွင်းပါ။</div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-12 col-md-4" id="genderCol">
+                            <label class="form-label">
+                                ကျား / မ (Gender) <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="gender" required>
+                                <option value="" selected disabled>ရွေးချယ်ပါ</option>
+                                <option value="Male">ကျား (Male)</option>
+                                <option value="Female">မ (Female)</option>
+                            </select>
+                            <div class="invalid-feedback">ကျား/မ ရွေးချယ်ပါ။</div>
+                        </div>
+
+                        <!-- NRC / Company Reg Number -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" id="nrcLabel">
+                                မှတ်ပုံတင်အမှတ် (NRC Number) <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="nrcNumber" placeholder="၁၂/ဥကတ(နိုင်)၁၂၃၄၅၆" required>
+                            <div class="invalid-feedback" id="nrcFeedback">မှတ်ပုံတင်အမှတ် ဖြည့်သွင်းပါ။</div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                ဖုန်းနံပါတ် (Phone Number) <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted" style="font-size: 0.85rem;">+95</span>
+                                <input type="tel" class="form-control" id="phoneNumber" placeholder="09123456789" required>
+                                <div class="invalid-feedback">ဖုန်းနံပါတ် ဖြည့်သွင်းပါ။</div>
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="col-12">
+                            <label class="form-label">
+                                အီးမေးလ် (Email Address)
+                            </label>
+                            <input type="email" class="form-control" id="emailAddress" placeholder="example@domain.com">
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2: Contact & Address -->
+                    <div class="section-title d-flex align-items-center">
+                        <span class="section-badge">2</span>
+                        <span>နေရပ်လိပ်စာ (Address Details)</span>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- Region / State -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                တိုင်းဒေသကြီး / ပြည်နယ် (Region / State) <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="regionState" required>
+                                <option value="" selected disabled>တိုင်းဒေသကြီး / ပြည်နယ် ရွေးပါ</option>
+                                <option value="Yangon">ရန်ကုန်တိုင်းဒေသကြီး (Yangon)</option>
+                                <option value="Mandalay">မန္တလေးတိုင်းဒေသကြီး (Mandalay)</option>
+                                <option value="Naypyidaw">နေပြည်တော် (Naypyidaw)</option>
+                                <option value="Bago">ပဲခူးတိုင်းဒေသကြီး (Bago)</option>
+                                <option value="Shan">ရှမ်းပြည်နယ် (Shan State)</option>
+                                <option value="Ayeyarwady">ဧရာဝတီတိုင်းဒေသကြီး (Ayeyarwady)</option>
+                            </select>
+                            <div class="invalid-feedback">တိုင်းဒေသကြီး/ပြည်နယ် ရွေးချယ်ပါ။</div>
+                        </div>
+
+                        <!-- Township -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                မြို့နယ် (Township) <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="township" required>
+                                <option value="" selected disabled>မြို့နယ် ရွေးပါ</option>
+                                <option value="Hlaing">လှိုင်မြို့နယ် (Hlaing)</option>
+                                <option value="Kamayut">ကမာရွတ်မြို့နယ် (Kamayut)</option>
+                                <option value="Sanchaung">စမ်းချောင်းမြို့နယ် (Sanchaung)</option>
+                                <option value="Mayangone">မရမ်းကုန်းမြို့နယ် (Mayangone)</option>
+                                <option value="Thingangyun">သင်္ဃန်းကျွန်းမြို့နယ် (Thingangyun)</option>
+                                <option value="Bahan">ဗဟန်းမြို့နယ် (Bahan)</option>
+                            </select>
+                            <div class="invalid-feedback">မြို့နယ် ရွေးချယ်ပါ။</div>
+                        </div>
+
+                        <!-- Full Street Address -->
+                        <div class="col-12">
+                            <label class="form-label">
+                                နေရပ်လိပ်စာ အပြည့်အစုံ (Full Address) <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control" id="fullAddress" rows="2" placeholder="အိမ်အမှတ်၊ လမ်းအမည်၊ ရပ်ကွက်..." required></textarea>
+                            <div class="invalid-feedback">နေရပ်လိပ်စာ အပြည့်အစုံ ဖြည့်သွင်းပါ။</div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: Document Uploads -->
+                    <div class="section-title d-flex align-items-center">
+                        <span class="section-badge">3</span>
+                        <span id="docSectionTitle">မှတ်ပုံတင် / စာရွက်စာတမ်း ဓာတ်ပုံ (Identity Documents Upload)</span>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- NRC Front Upload -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" id="docFrontLabel">
+                                မှတ်ပုံတင် အရှေ့ဘက် (NRC Front)
+                            </label>
+                            <div class="upload-box" onclick="document.getElementById('docFrontInput').click()">
+                                <input type="file" id="docFrontInput" accept="image/*" class="d-none" onchange="previewImage(this, 'docFrontPreview', 'docFrontPlaceholder')">
+                                <div id="docFrontPlaceholder">
+                                    <i class="fa-solid fa-id-card fs-2 text-danger mb-2"></i>
+                                    <span class="d-block fw-semibold text-dark" style="font-size: 0.85rem;">ဓာတ်ပုံ တင်ရန် နှိပ်ပါ</span>
+                                    <small class="text-muted" style="font-size: 0.725rem;">PNG, JPG (Max 5MB)</small>
+                                </div>
+                                <img id="docFrontPreview" class="upload-preview mt-2" alt="Front Preview">
+                            </div>
+                        </div>
+
+                        <!-- NRC Back Upload -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" id="docBackLabel">
+                                မှတ်ပုံတင် အနောက်ဘက် (NRC Back)
+                            </label>
+                            <div class="upload-box" onclick="document.getElementById('docBackInput').click()">
+                                <input type="file" id="docBackInput" accept="image/*" class="d-none" onchange="previewImage(this, 'docBackPreview', 'docBackPlaceholder')">
+                                <div id="docBackPlaceholder">
+                                    <i class="fa-solid fa-id-card-clip fs-2 text-danger mb-2"></i>
+                                    <span class="d-block fw-semibold text-dark" style="font-size: 0.85rem;">ဓာတ်ပုံ တင်ရန် နှိပ်ပါ</span>
+                                    <small class="text-muted" style="font-size: 0.725rem;">PNG, JPG (Max 5MB)</small>
+                                </div>
+                                <img id="docBackPreview" class="upload-preview mt-2" alt="Back Preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex align-items-center justify-content-end gap-3 pt-3 border-top">
+						<a type="submit" class="btn btn-dark" th:href="@{/}">
+						  <i class="fa-solid fa-arrow-left-long me-1"></i> နောက်သို့ (Cancle)
+						</a>
+                        <button type="button" class="btn btn-reset" onclick="resetForm()">
+                            <i class="fa-solid fa-rotate-left me-1"></i> ပြန်စမည် (Reset)
+                        </button>
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fa-solid fa-floppy-disk me-2"></i> မှတ်ပုံတင်မည် (Submit)
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="successToast" class="toast align-items-center text-white bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center">
+                    <i class="fa-solid fa-circle-check fs-4 me-3"></i>
+                    <div>
+                        <strong class="d-block">အောင်မြင်ပါသည်!</strong>
+                        <small>ပိုင်ရှင်သစ် အချက်အလက်များကို သိမ်းဆည်းပြီးပါပြီ။</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+	<script  th:src="@{/js/owner.js}"></script>  
+</body>
+</html>

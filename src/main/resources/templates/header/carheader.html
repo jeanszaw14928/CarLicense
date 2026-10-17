@@ -1,0 +1,79 @@
+<header class="top-header" th:fragment="header">
+    <div class="container-fluid px-3 px-lg-4">
+
+        <div class="row align-items-center g-2">
+
+            <!-- Brand -->
+            <div class="col-lg-5 col-md-6 col-12">
+                <div class="d-flex align-items-center gap-3">
+
+                    <i class="bi bi-car-front-fill brand-icon"></i>
+
+                    <div>
+                        <div class="brand-title">
+                            Car License Registration System
+                        </div>
+
+                        <div class="brand-subtitle">
+                            Safe Drive · Legal Ride · Better Tomorrow
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="col-lg-4 col-md-6 col-7 header-search">
+
+                <form class="input-group search-box ms-lg-auto"
+                      action="/licenses"
+                      method="get">
+
+                    <input
+                        type="search"
+                        name="keyword"
+                        class="form-control"
+                        placeholder="Search license, car, owner...">
+
+                    <button type="submit" class="btn">
+                        <i class="bi bi-search"></i>
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- Admin -->
+            <div class="col-lg-3 col-5 header-admin">
+
+                <div class="d-flex align-items-center justify-content-end gap-3">
+
+                    <a href="/notifications"
+                       class="text-white position-relative"
+                       aria-label="Notifications">
+
+                        <i class="bi bi-bell-fill fs-5"></i>
+
+                        <span class="position-absolute top-0 start-100
+                                     translate-middle badge rounded-pill bg-danger">
+                            3
+                        </span>
+
+                    </a>
+
+                    <div class="admin-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div class="d-none d-md-block">
+                        <div class="fw-bold small">Admin</div>
+                        <small>Administrator</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</header>
