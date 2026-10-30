@@ -1,0 +1,64 @@
+<aside class="sidebar d-none d-md-flex" th:fragment="sidebar">
+    <div class="pt-3">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/}">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex justify-content-between align-items-center" href="#recent-licenses">
+                    <div>
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Licenses</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 0.65rem;"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#recent-licenses">
+                    <i class="fa-solid fa-car"></i>
+                    <span>Cars</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/owner/ownertable}" class="nav-link" href="#" onclick="openModal('addOwnerModal')">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Owners</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/township/list}" class="nav-link" href="#top-townships">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Townships</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Bottom Brand Box -->
+    <div class="sidebar-bottom-banner">
+        <i class="fa-solid fa-car-side text-danger fs-1 mb-2"></i>
+        <h6 class="text-white mb-0 fw-bold" style="font-size: 0.85rem;">Car License System</h6>
+        <small class="text-white-50" style="font-size: 0.7rem;">Admin Panel</small>
+    </div>
+</aside>

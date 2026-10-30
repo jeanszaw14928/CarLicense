@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car License Registration System - Townships</title>
+<div th:replace="~{fragments/link :: links}"></div>
+</head>
+<body>
+
+	<!-- Top Navbar Header -->
+	<div th:replace="~{header/topheader :: header}"></div>
+
+	<div class="wrapper">
+
+		<!-- Sidebar Navigation -->
+		<div th:replace="~{header/sidebar :: sidebar}"></div>
+
+		<!-- Main Content Section -->
+		<main class="main-content">
+
+			<!-- Dashboard Subheader -->
+			<div
+				class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4">
+				<div class="d-flex align-items-center mb-2 mb-sm-0">
+					<div
+						class="bg-danger text-white rounded-circle p-2 me-3 d-flex align-items-center justify-content-center"
+						style="width: 42px; height: 42px;">
+						<i class="fa-solid fa-gauge-high fs-5"></i>
+					</div>
+					<div>
+						<h2 class="h5 fw-bold text-slate-800 mb-0">Dashboard</h2>
+						<span class="text-muted" style="font-size: 0.8rem;">Welcome
+							back, Admin! Here's an overview of your system.</span>
+					</div>
+				</div>
+				<div class="text-muted text-sm-end" style="font-size: 0.8rem;">
+					<i class="fa-regular fa-calendar me-1"></i> <span id="liveDate">Tuesday,
+						7 October 2025</span> <span class="mx-1">|</span> <i
+						class="fa-regular fa-clock me-1"></i> <span id="liveTime">10:24
+						AM</span>
+				</div>
+			</div>
+
+			<!-- Stat Cards Row (4 Cards) -->
+			<div class="row g-3 mb-4">
+				<div class="col-lg-2 col-md-2 col-sm-12"></div>
+				<div class="col-lg-8 col-md-8 col-sm-12">
+					<!-- table start -->
+					<div class="card shadow-sm border-0 mt-4">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-hover align-middle mb-0 text-center">
+									<thead class="table-light text-secondary">
+										<tr>
+											<th scope="col" style="width: 10%;">No.</th>
+											<th scope="col" style="width: 50%;">Township Name</th>
+											<th scope="col" style="width: 40%;" class="text-center">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Thymeleaf ဖြင့် ဒေတာများ ထည့်သွင်းရန် (ဥပမာ) -->
+										<tr th:if="${townships.empty}">
+											<td colspan="3" class="text-center text-muted py-4">No
+												townships found.</td>
+										</tr>
+										<!-- <tr th:each="township, iterStat : ${townships}"> -->
+										<tr th:each="township,status : ${townships}">
+											<td class="fw-semibold" th:text="${status.count}">1</td>
+											<td th:text="${township.name}">Kamaryut</td>
+											<td class="text-center d-flex"><a
+												th:href="@{/township/edit/{id}(id=${township.id})}"
+												class="btn btn-sm btn-outline-primary me-1"> <i
+													class="fa-solid fa-pen-to-square"></i> Edit
+											</a> 
+											<!-- delete form start -->
+												<form th:action="@{/township/delete/{id}(id=${township.id})}" method="post">
+													<button class="btn btn-sm btn-outline-danger">
+														<i class="fa-solid fa-trash"></i> Delete
+													</button>
+												</form> <!-- delete form end --></td>
+										</tr>
+
+										<!-- </tr> -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- table end -->
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-12"></div>
+
+			</div>
+
+		</main>
+	</div>
+
+</body>
+</html>

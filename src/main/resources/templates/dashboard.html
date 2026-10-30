@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car License Registration System - Dashboard</title>
+    <div th:replace="~{fragments/link :: links}"></div>
+</head>
+<body>
+
+    <!-- Top Navbar Header -->
+    <div th:replace="~{header/topheader :: header}"></div>
+
+    <div class="wrapper">
+        
+        <!-- Sidebar Navigation -->
+       <div th:replace="~{header/sidebar :: sidebar}"></div>
+
+        <!-- Main Content Section -->
+        <main class="main-content">
+            
+            <!-- Dashboard Subheader -->
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4">
+                <div class="d-flex align-items-center mb-2 mb-sm-0">
+                    <div class="bg-danger text-white rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                        <i class="fa-solid fa-gauge-high fs-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="h5 fw-bold text-slate-800 mb-0">Dashboard</h2>
+                        <span class="text-muted" style="font-size: 0.8rem;">Welcome back, Admin! Here's an overview of your system.</span>
+                    </div>
+                </div>
+                <div class="text-muted text-sm-end" style="font-size: 0.8rem;">
+                    <i class="fa-regular fa-calendar me-1"></i> <span id="liveDate">Tuesday, 7 October 2025</span>
+                    <span class="mx-1">|</span>
+                    <i class="fa-regular fa-clock me-1"></i> <span id="liveTime">10:24 AM</span>
+                </div>
+            </div>
+
+            <!-- Stat Cards Row (4 Cards) -->
+            <div class="row g-3 mb-4">
+                <!-- Card 1: Total Licenses -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="stat-card red-card">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-id-card"></i>
+                            </div>
+                            <div class="text-end">
+                                <span class="d-block text-white-50" style="font-size: 0.78rem;">Total Licenses</span>
+                                <h3 class="fw-extrabold mb-0" style="font-size: 1.8rem;">1,248</h3>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-white-50" style="font-size: 0.75rem;">
+                            <span class="text-white fw-bold"><i class="fa-solid fa-arrow-up"></i> 12%</span> Compared to last month
+                        </div>
+                        <i class="fa-solid fa-id-card bg-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2: Total Cars -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="stat-card blue-card">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-car"></i>
+                            </div>
+                            <div class="text-end">
+                                <span class="d-block text-white-50" style="font-size: 0.78rem;">Total Cars</span>
+                                <h3 class="fw-extrabold mb-0" style="font-size: 1.8rem;">1,156</h3>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-white-50" style="font-size: 0.75rem;">
+                            <span class="text-white fw-bold"><i class="fa-solid fa-arrow-up"></i> 10%</span> Compared to last month
+                        </div>
+                        <i class="fa-solid fa-car bg-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3: Total Owners -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="stat-card red-card">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="text-end">
+                                <span class="d-block text-white-50" style="font-size: 0.78rem;">Total Owners</span>
+                                <h3 class="fw-extrabold mb-0" style="font-size: 1.8rem;">982</h3>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-white-50" style="font-size: 0.75rem;">
+                            <span class="text-white fw-bold"><i class="fa-solid fa-arrow-up"></i> 8%</span> Compared to last month
+                        </div>
+                        <i class="fa-solid fa-users bg-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Card 4: Total Townships -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="stat-card blue-card">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="text-end">
+                                <span class="d-block text-white-50" style="font-size: 0.78rem;">Total Townships</span>
+                                <h3 class="fw-extrabold mb-0" style="font-size: 1.8rem;">14</h3>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-white-50" style="font-size: 0.75rem;">
+                            All Registered Townships
+                        </div>
+                        <i class="fa-solid fa-map-location-dot bg-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section (Bar & Doughnut) -->
+            <div class="row g-3 mb-4">
+                <!-- Licenses by Township (Bar Chart) -->
+                <div class="col-12 col-lg-7 col-xl-8">
+                    <div class="content-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="content-card-title mb-0">
+                                <i class="fa-solid fa-chart-column text-danger me-2"></i> Licenses by Township
+                            </h3>
+                        </div>
+                        <div style="height: 250px; position: relative;">
+                            <canvas id="townshipBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- License Status (Doughnut Chart) -->
+                <div class="col-12 col-lg-5 col-xl-4">
+                    <div class="content-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="content-card-title mb-0">
+                                <i class="fa-solid fa-chart-pie text-danger me-2"></i> License Status
+                            </h3>
+                        </div>
+                        
+                        <div class="row align-items-center">
+                            <div class="col-7" style="height: 210px; position: relative;">
+                                <canvas id="statusDoughnutChart"></canvas>
+                                <div class="position-absolute top-50 start-50 translate-middle text-center pointer-events-none" style="margin-top: -5px;">
+                                    <span class="d-block fw-bold text-dark" style="font-size: 1.1rem; line-height: 1;">1,248</span>
+                                    <small class="text-muted" style="font-size: 0.65rem;">Total</small>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span class="text-muted" style="font-size: 0.75rem;"><i class="fa-solid fa-circle text-primary me-1"></i> Active</span>
+                                        <span class="fw-bold text-dark ms-2" style="font-size: 0.8rem;">1,020</span>
+                                    </div>
+                                    <small class="text-muted d-block text-end" style="font-size: 0.7rem;">82%</small>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span class="text-muted" style="font-size: 0.75rem;"><i class="fa-solid fa-circle text-danger me-1"></i> Expired</span>
+                                        <span class="fw-bold text-dark ms-2" style="font-size: 0.8rem;">198</span>
+                                    </div>
+                                    <small class="text-muted d-block text-end" style="font-size: 0.7rem;">16%</small>
+                                </div>
+                                <div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span class="text-muted" style="font-size: 0.75rem;"><i class="fa-solid fa-circle text-secondary me-1"></i> Suspended</span>
+                                        <span class="fw-bold text-dark ms-2" style="font-size: 0.8rem;">30</span>
+                                    </div>
+                                    <small class="text-muted d-block text-end" style="font-size: 0.7rem;">2%</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section Grid -->
+            <div class="row g-3 mb-4">
+                
+                <!-- Recent Car Licenses Table -->
+                <div class="col-12 col-xl-8" id="recent-licenses">
+                    <div class="content-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="content-card-title mb-0">
+                                <i class="fa-solid fa-car text-danger me-2"></i> Recent Car Licenses
+                            </h3>
+                            <a href="#" class="text-danger fw-bold text-decoration-none" style="font-size: 0.78rem;">View All <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table custom-table table-hover align-middle mb-0" id="recentTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>License No</th>
+                                        <th>Plate No</th>
+                                        <th>Owner</th>
+                                        <th>Township</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="fw-semibold">LIC-00001</td>
+                                        <td class="fw-bold text-primary">9A-1234</td>
+                                        <td>Mg Mg</td>
+                                        <td>Hlaing</td>
+                                        <td><span class="badge-active">Active</span></td>
+                                        <td class="text-center"><button class="btn btn-view-sm" onclick="viewLicenseDetails('LIC-00001', '9A-1234', 'Mg Mg', 'Hlaing', 'Active')">View</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td class="fw-semibold">LIC-00002</td>
+                                        <td class="fw-bold text-primary">7B-5678</td>
+                                        <td>Aung Aung</td>
+                                        <td>Kamayut</td>
+                                        <td><span class="badge-active">Active</span></td>
+                                        <td class="text-center"><button class="btn btn-view-sm" onclick="viewLicenseDetails('LIC-00002', '7B-5678', 'Aung Aung', 'Kamayut', 'Active')">View</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td class="fw-semibold">LIC-00003</td>
+                                        <td class="fw-bold text-primary">5C-9999</td>
+                                        <td>Kyaw Kyaw</td>
+                                        <td>Sanchaung</td>
+                                        <td><span class="badge-expired">Expired</span></td>
+                                        <td class="text-center"><button class="btn btn-view-sm" onclick="viewLicenseDetails('LIC-00003', '5C-9999', 'Kyaw Kyaw', 'Sanchaung', 'Expired')">View</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td class="fw-semibold">LIC-00004</td>
+                                        <td class="fw-bold text-primary">4D-1111</td>
+                                        <td>Thant Zin</td>
+                                        <td>Mayangone</td>
+                                        <td><span class="badge-active">Active</span></td>
+                                        <td class="text-center"><button class="btn btn-view-sm" onclick="viewLicenseDetails('LIC-00004', '4D-1111', 'Thant Zin', 'Mayangone', 'Active')">View</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td class="fw-semibold">LIC-00005</td>
+                                        <td class="fw-bold text-primary">2E-2222</td>
+                                        <td>Zaw Zaw</td>
+                                        <td>Thingangyun</td>
+                                        <td><span class="badge-active">Active</span></td>
+                                        <td class="text-center"><button class="btn btn-view-sm" onclick="viewLicenseDetails('LIC-00005', '2E-2222', 'Zaw Zaw', 'Thingangyun', 'Active')">View</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Grid -->
+                <div class="col-12 col-xl-4">
+                    <div class="content-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="content-card-title mb-0">
+                                <i class="fa-solid fa-bolt text-danger me-2"></i> Quick Actions
+                            </h3>
+                        </div>
+
+                        <div class="row g-2">
+                            <!-- Add New License -->
+                            <div class="col-12 col-sm-6 col-xl-12">
+                                <a  th:href="@{/license/home}" class="action-btn btn-red">
+                                    <div class="d-flex align-items-center">
+                                        <div class="btn-icon-circle">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </div>
+                                        <div>
+                                            <span class="d-block fw-bold" style="font-size: 0.85rem;">Add New License</span>
+                                            <small class="text-white-50" style="font-size: 0.7rem;">Register a new car license</small>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right fs-6"></i>
+                                </a>
+                            </div>
+
+                            <!-- Add New Car -->
+                            <div class="col-12 col-sm-6 col-xl-12">
+                                <a th:href="@{/car/home}" class="action-btn btn-blue">
+                                    <div class="d-flex align-items-center">
+                                        <div class="btn-icon-circle">
+                                            <i class="fa-solid fa-car-side"></i>
+                                        </div>
+                                        <div>
+                                            <span class="d-block fw-bold" style="font-size: 0.85rem;">Add New Car</span>
+                                            <small class="text-white-50" style="font-size: 0.7rem;">Register a new car</small>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right fs-6"></i>
+                                </a>
+                            </div>
+
+                            <!-- Add New Owner -->
+                            <div class="col-12 col-sm-6 col-xl-12">
+                                <a class="action-btn btn-red" th:href="@{/owner/ownerform}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="btn-icon-circle">
+                                            <i class="fa-solid fa-user-plus"></i>
+                                        </div>
+                                        <div>
+                                            <span class="d-block fw-bold" style="font-size: 0.85rem;">Add New Owner</span>
+                                            <small class="text-white-50" style="font-size: 0.7rem;">Register a new owner</small>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right fs-6"></i>
+                                </a>
+                            </div> 
+
+                            <!-- Manage Townships -->
+                            <div class="col-12 col-sm-6 col-xl-12">
+                                <a class="action-btn btn-blue" th:href="@{/township/create}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="btn-icon-circle">
+                                            <i class="fa-solid fa-map-location-dot"></i>
+                                        </div>
+                                        <div>
+                                            <span class="d-block fw-bold" style="font-size: 0.85rem;">Manage Townships</span>
+                                            <small class="text-white-50" style="font-size: 0.7rem;">View all townships</small>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right fs-6"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Expired Licenses & Top Townships Row -->
+            <div class="row g-3">
+                <!-- Expired Licenses Table -->
+                <div class="col-12 col-md-6 col-xl-5">
+                    <div class="content-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="content-card-title mb-0" style="font-size: 0.88rem;">
+                                <i class="fa-regular fa-calendar-xmark text-danger me-2"></i> Expired Licenses <span class="text-muted font-normal ms-1" style="font-size: 0.75rem;">(This Month)</span>
+                            </h3>
+                            <a href="#" class="text-danger fw-bold text-decoration-none" style="font-size: 0.75rem;">View All <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table custom-table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>License No</th>
+                                        <th>Plate No</th>
+                                        <th>Expiry Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="fw-semibold">LIC-00023</td>
+                                        <td class="fw-bold text-primary">3F-5555</td>
+                                        <td class="text-danger fw-semibold">2025-09-12</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td class="fw-semibold">LIC-00045</td>
+                                        <td class="fw-bold text-primary">8G-7777</td>
+                                        <td class="text-danger fw-semibold">2025-09-18</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td class="fw-semibold">LIC-00067</td>
+                                        <td class="fw-bold text-primary">6H-8888</td>
+                                        <td class="text-danger fw-semibold">2025-09-25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td class="fw-semibold">LIC-00089</td>
+                                        <td class="fw-bold text-primary">4I-9999</td>
+                                        <td class="text-danger fw-semibold">2025-09-28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td class="fw-semibold">LIC-00102</td>
+                                        <td class="fw-bold text-primary">1J-0001</td>
+                                        <td class="text-danger fw-semibold">2025-09-30</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 5 Townships by Licenses -->
+                <div class="col-12 col-md-6 col-xl-3" id="top-townships">
+                    <div class="content-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="content-card-title mb-0" style="font-size: 0.88rem;">
+                                <i class="fa-solid fa-location-dot text-danger me-2"></i> Top 5 Townships by Licenses
+                            </h3>
+                        </div>
+
+                        <div class="space-y-3">
+                            <!-- Township 1 -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold text-slate-700" style="font-size: 0.8rem;">Hlaing</span>
+                                    <span class="fw-bold text-slate-800" style="font-size: 0.8rem;">220</span>
+                                </div>
+                                <div class="progress township-progress">
+                                    <div class="progress-bar progress-bar-red" role="progressbar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Township 2 -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold text-slate-700" style="font-size: 0.8rem;">Kamayut</span>
+                                    <span class="fw-bold text-slate-800" style="font-size: 0.8rem;">180</span>
+                                </div>
+                                <div class="progress township-progress">
+                                    <div class="progress-bar progress-bar-blue" role="progressbar" style="width: 82%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Township 3 -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold text-slate-700" style="font-size: 0.8rem;">Sanchaung</span>
+                                    <span class="fw-bold text-slate-800" style="font-size: 0.8rem;">150</span>
+                                </div>
+                                <div class="progress township-progress">
+                                    <div class="progress-bar progress-bar-red" role="progressbar" style="width: 68%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Township 4 -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold text-slate-700" style="font-size: 0.8rem;">Mayangone</span>
+                                    <span class="fw-bold text-slate-800" style="font-size: 0.8rem;">120</span>
+                                </div>
+                                <div class="progress township-progress">
+                                    <div class="progress-bar progress-bar-blue" role="progressbar" style="width: 55%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Township 5 -->
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold text-slate-700" style="font-size: 0.8rem;">Thingangyun</span>
+                                    <span class="fw-bold text-slate-800" style="font-size: 0.8rem;">95</span>
+                                </div>
+                                <div class="progress township-progress">
+                                    <div class="progress-bar progress-bar-red" role="progressbar" style="width: 43%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Promo / Graphic Banner -->
+                <div class="col-12 col-xl-4">
+                    <div class="promo-banner h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <h3 class="fw-bold fst-italic mb-1" style="font-size: 1.25rem;">Better Registration</h3>
+                            <h3 class="fw-bold fst-italic text-white-50 mb-3" style="font-size: 1.25rem;">Safer Roads</h3>
+                        </div>
+
+                        <!-- Car Visual Graphic -->
+                        <div class="text-center my-3">
+                            <i class="fa-solid fa-car-side text-white display-1 opacity-75"></i>
+                        </div>
+
+                        <!-- Footer Badge inside banner -->
+                        <div class="d-flex align-items-center bg-black bg-opacity-40 p-2 rounded-3 border border-white border-opacity-10">
+                            <div class="p-2 bg-white bg-opacity-20 rounded-2 me-2">
+                                <i class="fa-solid fa-shield-halved text-white"></i>
+                            </div>
+                            <div>
+                                <span class="d-block fw-bold text-white" style="font-size: 0.75rem;">Car License Registration System</span>
+                                <small class="text-white-50" style="font-size: 0.65rem;">Department of Transportation</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODALS SECTION -->
+    
+    <!-- 1. Add New License Modal -->
+    <div class="modal fade" id="addLicenseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-plus me-2"></i>Add New License</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="licenseForm" onsubmit="handleFormSubmit(event, 'addLicenseModal')">
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Plate Number</label>
+                            <input type="text" class="form-control" placeholder="e.g. 9A-1234" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Owner Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Mg Mg" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Township</label>
+                            <select class="form-select" required>
+                                <option value="">Select Township</option>
+                                <option value="Hlaing">Hlaing</option>
+                                <option value="Kamayut">Kamayut</option>
+                                <option value="Sanchaung">Sanchaung</option>
+                                <option value="Mayangone">Mayangone</option>
+                                <option value="Thingangyun">Thingangyun</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Expiry Date</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger btn-sm px-4">Save License</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Add New Car Modal -->
+    <div class="modal fade" id="addCarModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-car me-2"></i>Add New Car</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form onsubmit="handleFormSubmit(event, 'addCarModal')">
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Car Model / Make</label>
+                            <input type="text" class="form-control" placeholder="e.g. Toyota Crown 2020" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Plate Number</label>
+                            <input type="text" class="form-control" placeholder="e.g. 7B-5678" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Chassis Number</label>
+                            <input type="text" class="form-control" placeholder="e.g. CHS-992011" required>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm px-4">Register Car</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Add Owner Modal -->
+    <div class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-user-plus me-2"></i>Add New Owner</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form onsubmit="handleFormSubmit(event, 'addOwnerModal')">
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Full Owner Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. U Aung Kyaw" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">NRC / ID Number</label>
+                            <input type="text" class="form-control" placeholder="12/UKTA(N)123456" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold text-muted" style="font-size: 0.8rem;">Phone Number</label>
+                            <input type="tel" class="form-control" placeholder="09 123456789" required>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger btn-sm px-4">Save Owner</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. View Details Modal -->
+    <div class="modal fade" id="viewDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-circle-info me-2"></i>License Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" id="viewModalBody">
+                    <!-- Populated dynamically by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            // 1. Licenses by Township Bar Chart
+            const ctxBar = document.getElementById('townshipBarChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Hlaing', 'Kamayut', 'Sanchaung', 'Mayangone', 'Thingangyun', 'Others'],
+                    datasets: [{
+                        data: [220, 180, 150, 120, 95, 85],
+                        backgroundColor: [
+                            '#e61c24', // Red
+                            '#0052cc', // Blue
+                            '#e61c24', // Red
+                            '#0052cc', // Blue
+                            '#e61c24', // Red
+                            '#0052cc'  // Blue
+                        ],
+                        borderRadius: 4,
+                        barThickness: 28
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Licenses: ${context.raw}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 250,
+                            ticks: { stepSize: 50, font: { family: 'Inter', size: 11 }, color: '#64748b' },
+                            grid: { color: '#f1f5f9' }
+                        }
+                    }
+                }
+            });
+
+            // 2. License Status Doughnut Chart
+            const ctxDoughnut = document.getElementById('statusDoughnutChart').getContext('2d');
+            new Chart(ctxDoughnut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Active', 'Expired', 'Suspended'],
+                    datasets: [{
+                        data: [1020, 198, 30],
+                        backgroundColor: [
+                            '#0052cc', // Blue
+                            '#e61c24', // Red
+                            '#94a3b8'  // Grey
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        });       
+    </script>
+</body>
+</html>

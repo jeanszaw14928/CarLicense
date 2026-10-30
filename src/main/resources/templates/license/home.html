@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="my" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New License - Car License Registration System</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Inter & Padauk for Burmese) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-red: #e61c24;
+            --brand-red-hover: #c41219;
+            --navy-dark: #091738;
+            --bg-light: #f4f6f9;
+        }
+
+        body {
+            font-family: 'Inter', 'Padauk', sans-serif;
+            background-color: var(--bg-light);
+            color: #334155;
+            min-height: 100vh;
+        }
+
+        /* Form Card Layout */
+        .form-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(90deg, var(--navy-dark) 0%, #0c204d 100%);
+            color: #ffffff;
+            padding: 22px 28px;
+            border-bottom: 4px solid var(--brand-red);
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: rgba(230, 28, 36, 0.12);
+            color: var(--brand-red);
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.825rem;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            padding: 9px 14px;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--brand-red);
+            box-shadow: 0 0 0 3px rgba(230, 28, 36, 0.15);
+        }
+
+        .btn-submit {
+            background-color: var(--brand-red);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 10px 28px;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--brand-red-hover);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(230, 28, 36, 0.3);
+        }
+
+        .btn-reset {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body class="py-4 py-md-5">
+
+    <div class="container" style="max-width: 900px;">
+        
+        <!-- Form Container Card -->
+        <div class="form-card">
+            
+            <!-- Card Header -->
+            <div class="form-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h5 mb-1 text-white fw-bold">
+                        <i class="fa-solid fa-file-invoice me-2 text-danger"></i>မော်တော်ယာဉ်လိုင်စင်အသစ် ထည့်သွင်းရန် (Add New License)
+                    </h1>
+                    <small class="text-white-50" style="font-size: 0.78rem;">Licenses Database Table Form Structure</small>
+                </div>
+                <div class="d-none d-sm-block text-end">
+                    <span class="badge bg-danger px-3 py-2 rounded-pill fw-semibold">
+                        <i class="fa-solid fa-database me-1"></i> 1 : Many Linked
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-4 p-md-5">
+                <form id="licenseForm" th:action="@{/licenses/save}" method="post" onsubmit="handleFormSubmit(event)" class="needs-validation" novalidate>
+                    
+                    <!-- SECTION: Database Fields -->
+                    <div class="section-title d-flex align-items-center">
+                        <span class="section-badge">1</span>
+                        <span>လိုင်စင်ဇယား အချက်အလက်များ (Licenses Schema Fields)</span>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- license_id (PK) -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                လိုင်စင်စဉ် (license_id - PK)
+                            </label>
+                            <input type="text" class="form-control bg-light" id="license_id" name="license_id" value="Auto Generated" readonly>
+                        </div>
+
+                        <!-- car_id (FK) -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                ယာဉ်ရွေးချယ်ရန် (car_id - Foreign Key) <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="car_id" name="car_id" required>
+                                <option value="" selected disabled>ယာဉ် ရွေးချယ်ပါ (Select Car)</option>
+                                <option value="1">9A-1234 - Toyota Corolla</option>
+                                <option value="2">7B-5678 - Honda Civic</option>
+                                <option value="3">5C-9999 - Nissan Sunny</option>
+                            </select>
+                            <div class="invalid-feedback">ကျေးဇူးပြု၍ ယာဉ် ရွေးချယ်ပါ။</div>
+                        </div>
+
+                        <!-- license_number -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                လိုင်စင်အမှတ် (license_number) <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control font-monospace" id="license_number" name="license_number" placeholder="ဥပမာ - LIC-00001" required>
+                            <div class="invalid-feedback">လိုင်စင်အမှတ် ဖြည့်သွင်းပါ။</div>
+                        </div>
+
+                        <!-- status -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                လိုင်စင်အခြေအနေ (status) <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="Active" selected>Active (သက်ဝင်ဆဲ)</option>
+                                <option value="Expired">Expired (သက်တမ်းကုန်)</option>
+                                <option value="Suspended">Suspended (ရပ်ဆိုင်းထား)</option>
+                            </select>
+                            <div class="invalid-feedback">အခြေအနေ ရွေးချယ်ပါ။</div>
+                        </div>
+
+                        <!-- issue_date -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                ထုတ်ပေးသည့်ရက်စွဲ (issue_date) <span class="text-danger">*</span>
+                            </label>
+                            <input type="date" class="form-control" id="issue_date" name="issue_date" required>
+                            <div class="invalid-feedback">ထုတ်ပေးသည့်ရက်စွဲ ထည့်သွင်းပါ။</div>
+                        </div>
+
+                        <!-- expiry_date -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                သက်တမ်းကုန်ဆုံးမည့်ရက်စွဲ (expiry_date) <span class="text-danger">*</span>
+                            </label>
+                            <input type="date" class="form-control" id="expiry_date" name="expiry_date" required>
+                            <div class="invalid-feedback">သက်တမ်းကုန်ဆုံးမည့်ရက်စွဲ ထည့်သွင်းပါ။</div>
+                        </div>
+
+                        <!-- remarks -->
+                        <div class="col-12">
+                            <label class="form-label">
+                                မှတ်ချက် / အထူးအချက်များ (remarks)
+                            </label>
+                            <textarea class="form-control" id="remarks" name="remarks" rows="3" placeholder="အထူးမှတ်ချက်များ ရေးသားရန်..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex align-items-center justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-reset" onclick="resetForm()">
+                            <i class="fa-solid fa-rotate-left me-1"></i> ပြန်စမည် (Reset)
+                        </button>
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fa-solid fa-floppy-disk me-2"></i> လိုင်စင်သိမ်းဆည်းမည် (Save License)
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="successToast" class="toast align-items-center text-white bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center">
+                    <i class="fa-solid fa-circle-check fs-4 me-3"></i>
+                    <div>
+                        <strong class="d-block">အောင်မြင်ပါသည်![cite: 4]</strong>
+                        <small>လိုင်စင် အချက်အလက်များကို Database သို့ သိမ်းဆည်းပြီးပါပြီ။[cite: 4]</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Reset Form Logic
+        function resetForm() {
+            const form = document.getElementById('licenseForm');
+            form.reset();
+            form.classList.remove('was-validated');
+        }
+
+        // Form Submission Validation Handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('licenseForm');
+
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            // Show Toast Success Notification
+            const toastElem = document.getElementById('successToast');
+            const toast = new bootstrap.Toast(toastElem);
+            toast.show();
+
+            // Reset state after success feedback
+            setTimeout(() => {
+                resetForm();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Owner - Car License Registration System</title>
+    <div th:replace="~{fragments/formlink :: links}"></div>
+</head>
+<body class="py-4 py-md-5">
+
+    <div class="container" style="max-width: 900px;">
+        
+        <!-- Form Container Card -->
+        <div class="form-card">
+            
+            <!-- Card Header -->
+            <div class="form-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h5 mb-1 text-white fw-bold">
+                        <i class="fa-solid fa-user-plus me-2 text-danger"></i>
+                    </h1>
+                    <small class="text-white-50" style="font-size: 0.78rem;">Add New Township Registration Form</small>
+                </div>
+                <div class="d-none d-sm-block text-end">
+                    <span class="badge bg-danger px-3 py-2 rounded-pill fw-semibold">
+                        <i class="fa-solid fa-shield-halved me-1"></i> Official Entry
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-4 p-md-5">
+                <form th:action="@{/township/save}" method="post">
+                    
+                    <!-- SECTION 1: Basic Information -->
+                    <div class="section-title d-flex align-items-center">
+                        <span class="section-badge">1</span>
+                        <span>ပိုင်ရှင်အချက်အလက် (Basic Information)</span>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- Owner Type -->
+                        <div class="col-12 col-md-4">
+                            <label class="form-label">
+                               (TowhShip Type) <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" name="name" class="form-control" placeholder="ဥပမာ - ကျော်တော်" required>
+                            <div class="invalid-feedback">ကျေးဇူးပြု၍ အမည်ဖြည့်သွင်းပါ။</div>
+                        </div>
+                       
+                    </div>
+
+                    
+
+                   
+
+                    
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex align-items-center justify-content-end gap-3 pt-3 border-top">
+						<a type="submit" class="btn btn-dark" th:href="@{/}">
+						  <i class="fa-solid fa-arrow-left-long me-1"></i> နောက်သို့ (Cancle)
+						</a>
+                        <button type="button" class="btn btn-reset" onclick="resetForm()">
+                            <i class="fa-solid fa-rotate-left me-1"></i> ပြန်စမည် (Reset)
+                        </button>
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fa-solid fa-floppy-disk me-2"></i> မှတ်ပုံတင်မည် (Submit)
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="successToast" class="toast align-items-center text-white bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center">
+                    <i class="fa-solid fa-circle-check fs-4 me-3"></i>
+                    <div>
+                        <strong class="d-block">အောင်မြင်ပါသည်!</strong>
+                        <small>ပိုင်ရှင်သစ် အချက်အလက်များကို သိမ်းဆည်းပြီးပါပြီ။</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+	<script  th:src="@{/js/owner.js}"></script>  
+</body>
+</html>
