@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ImageService {
 
-	@Value("${app.upload.root-dir}")
+	@Value("${app.upload.root-dir:uploads}")
 	private String uploadRootDir;
 	
 	public Path getUploadPath(String folderName) throws IOException {
