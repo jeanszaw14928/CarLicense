@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -114,7 +115,48 @@ public class OwnerController {
 	public String edit(@PathVariable Long id,Model model) {
 		
 		Owner owner = ownerService.findById(id);
+		
+		OwnDto ownerDto = new OwnDto();
+		
+		ownerDto.setOwnertype(owner.getOwnertype());
+		ownerDto.setFullName(owner.getFullName());
+		ownerDto.setGender(owner.getGender());
+		ownerDto.setNrc(owner.getNrc());
+		ownerDto.setPhone(owner.getPhone());
+		ownerDto.setEmail(owner.getEmail());
+		ownerDto.setFulladdress(owner.getFulladdress());
+		ownerDto.setTownshipId(owner.getTownship().getId());
+		
+		model.addAttribute("ownerDto", ownerDto);
 		model.addAttribute("owner", owner);
+		model.addAttribute("townships", townshipService.township());
 		return "owner/owneredit";
+		
+		
+	}
+	
+	// ==========================================
+	// Update form
+	// ==========================================
+	@PostMapping("/update/{id}")
+	public String update(@PathVariable Long id,
+			@ModelAttribute OwnDto ownerDto,
+			RedirectAttributes redirectAttributes) {
+		
+		ownerService.update(id, ownerDto.getTownshipId(),ownerDto);
+		
+		redirectAttributes.addFlashAttribute("successMessage","Owner update successfully!");
+		return "redirect:/owner/ownertable";
+	}
+	
+	// ==========================================
+	// Owner Delete
+	// ==========================================
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable Long id,RedirectAttributes redirectAttributes) {
+		ownerService.delete(id);
+		
+		redirectAttributes.addFlashAttribute("deleteMessage","You Delete Message Successfully!");
+		return "redirect:/owner/owntertabel";
 	}
 }

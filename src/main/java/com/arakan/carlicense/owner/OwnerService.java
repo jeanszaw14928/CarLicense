@@ -87,4 +87,12 @@ public class OwnerService {
 
 		return repo.save(owner);
 	}
+	
+	// ========================================
+	// Owner Delete
+	// ========================================
+	public void delete(Long id) {
+		Owner owner = repo.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
+		repo.delete(owner);
+	}
 }

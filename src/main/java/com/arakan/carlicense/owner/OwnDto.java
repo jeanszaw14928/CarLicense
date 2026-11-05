@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class OwnDto {
 
+	private Long id;
 	private OwnerType ownertype = OwnerType.PERSONAL;
 	private String fullName;
 	private Gender gender = Gender.MALE;

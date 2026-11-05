@@ -46,6 +46,17 @@
 			<div class="row g-3 mb-4">
 				<div class="col-lg-1 col-md-1 col-sm-12"></div>
 				<div class="col-lg-10 col-md-10 col-sm-12">
+				<!-- successfully message -->
+				<div th:if="${successMessage}"
+				class="alert alert-success alert-dismissible fade show"
+				role="alert">
+					<i class="fa-solid fa-circle-check me-2"></i>
+					<span th:text="${successMessage}"></span>
+					
+					<button type="button"
+					class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				
 					<!-- table start -->
 					<div class="card shadow-sm border-0 mt-4">
 						<div class="card-body">
