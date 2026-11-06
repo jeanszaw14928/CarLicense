@@ -53,4 +53,23 @@ public class ImageService {
 		// databaseထဲ သိမ်းဖို့ ဖိုင်နာမေကို ပြန်ပေးသည်
 		return fileName;
 	}
+	
+	// NRC Image Delete
+	public void deleteNrcImage(String fileName) throws IOException {
+		
+		if(fileName == null || fileName.isBlank()) {
+			return;
+		}
+		
+		Path uploadPath = getUploadPath("nrc");
+		
+		Path filePath = uploadPath.resolve(fileName).normalize();
+		
+		// NRC folder အပြင်ဘက်က file ကို ဖျက်ခွင့်မပြုရန်
+		if(!filePath.startsWith(uploadPath)) {
+			throw new IllegalArgumentException("Invalid image path");
+		}
+		
+		Files.deleteIfExists(filePath);
+	}
 }

@@ -46,12 +46,24 @@
 			<div class="row g-3 mb-4">
 				<div class="col-lg-1 col-md-1 col-sm-12"></div>
 				<div class="col-lg-10 col-md-10 col-sm-12">
+				
 				<!-- successfully message -->
 				<div th:if="${successMessage}"
 				class="alert alert-success alert-dismissible fade show"
 				role="alert">
 					<i class="fa-solid fa-circle-check me-2"></i>
 					<span th:text="${successMessage}"></span>
+					
+					<button type="button"
+					class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				
+				<!-- Delete Message -->
+				<div th:if="${deleteMessage}"
+				class="alert alert-success alert-dismissible fade show"
+				role="alert">
+					<i class="fa-solid fa-circle-check me-2"></i>
+					<span th:text="${deleteMessage}"></span>
 					
 					<button type="button"
 					class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -83,17 +95,13 @@
 											<td th:text="${owner.email}"></td>
 											<td th:text="${owner.township.name}"></td>
 											<td class="text-center d-flex">
-											<a
-												
-												class="btn btn-sm btn-outline-warning me-1"> <i
-													class="fa-solid fa-eye"></i>
-											</a>
+											
 											<a th:href="@{/owner/edit/{id}(id=${owner.id})}"
 												class="btn btn-sm btn-outline-primary me-1"> <i
 													class="fa-solid fa-pen-to-square"></i>
 											</a> 
 											<!-- delete form start -->
-												<form>
+												<form method="post" th:action="@{/owner/delete/{id}(id=${owner.id})}">
 													<button class="btn btn-sm btn-outline-danger">
 														<i class="fa-solid fa-trash"></i>
 													</button>

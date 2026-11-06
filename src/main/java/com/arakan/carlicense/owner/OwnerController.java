@@ -157,6 +157,6 @@ public class OwnerController {
 		ownerService.delete(id);
 		
 		redirectAttributes.addFlashAttribute("deleteMessage","You Delete Message Successfully!");
-		return "redirect:/owner/owntertabel";
+		return "redirect:/owner/ownertable";
 	}
 }

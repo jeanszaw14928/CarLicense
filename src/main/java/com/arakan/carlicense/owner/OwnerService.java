@@ -58,6 +58,10 @@ public class OwnerService {
 		// find by township id from owner
 		TownShipsModel township = townshiprepo.findById(township_id).orElseThrow( () -> new RuntimeException("township not found"));
 		
+		// old image filename တွေကို အရင်သိမ်းမယ်
+		String oldFrontImage = owner.getNrcFrontImage();
+		String oldBackImage = owner.getNrcBackImage();
+		
 		// to save owner data
 		owner.setOwnertype(ownerDto.getOwnertype());
 		owner.setFullName(ownerDto.getFullName());
@@ -80,12 +84,25 @@ public class OwnerService {
 				String BackImageName = imageService.saveNrcImage(ownerDto.getNrcBackImage());
 				owner.setNrcFrontImage(BackImageName);
 			}
+		
+		
+
+		Owner updateOwner = repo.save(owner);
+		
+		// Database update အောင်မြင်ကေ ပုံ‌ဟောင်းကိုဖျက်မယ်
+		if(ownerDto.getNrcFrontImage() != null && !ownerDto.getNrcFrontImage().isEmpty()) {
+			imageService.deleteNrcImage(oldFrontImage);
+		}
+		
+		if(ownerDto.getNrcBackImage() != null && !ownerDto.getNrcBackImage().isEmpty()) {
+			imageService.deleteNrcImage(oldBackImage);
+		}
+		
+		return updateOwner;
+		
 		}catch(IOException e) {
 			throw new RuntimeException("Failed to store image file: " + e.getMessage());
 		}
-		
-
-		return repo.save(owner);
 	}
 	
 	// ========================================
@@ -93,6 +110,21 @@ public class OwnerService {
 	// ========================================
 	public void delete(Long id) {
 		Owner owner = repo.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
-		repo.delete(owner);
+		
+		
+		try {
+			// NRC Front delete
+			imageService.deleteNrcImage(owner.getNrcFrontImage());
+			
+			// NRC Back delete
+			imageService.deleteNrcImage(owner.getNrcBackImage());
+			
+			repo.delete(owner);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Failed to delete owner images: " + e.getMessage(), e);
+		}
+		
+		
 	}
 }
