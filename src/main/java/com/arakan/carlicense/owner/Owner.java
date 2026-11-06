@@ -1,5 +1,9 @@
 package com.arakan.carlicense.owner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.arakan.carlicense.car.Car;
 import com.arakan.carlicense.townships.TownShipsModel;
 
 import jakarta.persistence.Entity;
@@ -10,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,4 +49,8 @@ public class Owner {
 	private String fulladdress;
 	private String nrcFrontImage;
 	private String nrcBackImage;
+	
+	// for car
+	@OneToMany(mappedBy = "owner")
+	private List<Car> cars = new ArrayList<>();
 }

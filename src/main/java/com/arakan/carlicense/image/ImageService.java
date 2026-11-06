@@ -72,4 +72,37 @@ public class ImageService {
 		
 		Files.deleteIfExists(filePath);
 	}
+	
+	// car save image
+	public String saveCarImage(MultipartFile file) throws IOException {
+		if( file == null || file.isEmpty()) {
+			return null;
+		}
+		
+		Path uploadPath = getUploadPath("car");
+		String originalFileName = Paths.get(file.getOriginalFilename()).getFileName().toString();
+		
+		String fileName = System.currentTimeMillis() + "_" + originalFileName;
+		
+		Path filePath = uploadPath.resolve(fileName);
+		
+		Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+		
+		return fileName;
+	}
+	
+	// car delete image
+	public void deleteCarImage(String fileName) throws IOException {
+		if(fileName == null || fileName.isBlank()) {
+			return;
+		}
+		
+		Path uploadPath = getUploadPath("car");
+		Path filePath = uploadPath.resolve(fileName).normalize();
+		
+		if(!filePath.startsWith(uploadPath)) {
+			throw new IllegalArgumentException("Invalid image path");
+		}
+		Files.deleteIfExists(filePath);
+	}
 }

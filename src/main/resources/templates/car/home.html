@@ -24,13 +24,13 @@
                 </div>
                 <div class="d-none d-sm-block text-end">
                     <span class="badge bg-danger px-3 py-2 rounded-pill fw-semibold">
-                        <i class="fa-solid fa-database me-1"></i> DB Connected
+                        <i class="fa-solid fa-database me-1"></i>Car Database
                     </span>
                 </div>
             </div>
 
             <div class="p-4 p-md-5">
-                <form id="carRegistrationForm" th:action="@{/cars/save}" method="post" onsubmit="handleFormSubmit(event)" class="needs-validation" novalidate>
+                <form id="carRegistrationForm" th:action="@{/car/create}" method="post" th:object="${car}" enctype="multipart/form-data"  class="needs-validation" novalidate>
                     
                     <!-- SECTION 1: Relationship & Basic Specs -->
                     <div class="section-title d-flex align-items-center">
@@ -52,11 +52,10 @@
                             <label class="form-label">
                                 ကားပိုင်ရှင် (owner_id - Foreign Key) <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select" id="owner_id" name="owner_id" required>
+                            <select th:field="*{ownerId}" class="form-select" id="owner_id" name="owner_id" required>
                                 <option value="" selected disabled>ပိုင်ရှင် ရွေးချယ်ပါ (Select Owner)</option>
-                                <option value="1">ဦးအောင်ကျော် (NRC: 12/ဥကတ(နိုင်)123456)</option>
-                                <option value="2">ဒေါ်မိုးမိုး (NRC: 12/လမတ(နိုင်)654321)</option>
-                                <option value="3">ဦးကျော်စွာ (NRC: 9/မကတ(နိုင်)112233)</option>
+                                <option th:each="owner : ${owners}" th:value="${owner.id}" th:text="${owner.fullName + '(NRC: ' + owner.nrc + ')'}">ဦးအောင်ကျော် (NRC: 12/ဥကတ(နိုင်)123456)</option>
+                                
                             </select>
                             <div class="invalid-feedback">ကျေးဇူးပြု၍ ကားပိုင်ရှင် ရွေးချယ်ပါ။</div>
                         </div>
@@ -66,7 +65,7 @@
                             <label class="form-label">
                                 ယာဉ်နံပါတ် (plate_number) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control" id="plate_number" name="plate_number" placeholder="ဥပမာ - 9A-1234" required>
+                            <input th:field="*{platenum}" type="text" class="form-control" id="plate_number" name="plate_number" placeholder="ဥပမာ - 9A-1234" required>
                             <div class="invalid-feedback">ယာဉ်နံပါတ် ဖြည့်သွင်းပါ။</div>
                         </div>
 
@@ -75,14 +74,7 @@
                             <label class="form-label">
                                 ကားအမျိုးအစား (vehicle_type) <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select" id="vehicle_type" name="vehicle_type" required>
-                                <option value="" selected disabled>အမျိုးအစား ရွေးပါ</option>
-                                <option value="Sedan">Sedan (ဆီဒန်)</option>
-                                <option value="SUV">SUV (အက်စ်ယူဗီ)</option>
-                                <option value="Pickup">Pickup (ပစ်ကပ်)</option>
-                                <option value="Truck">Truck (ထရပ်ကား)</option>
-                                <option value="Van">Van (ဗန်)</option>
-                            </select>
+                            <input type="text" class="form-control" th:field="*{vehicle}">
                             <div class="invalid-feedback">ကားအမျိုးအစား ရွေးချယ်ပါ။</div>
                         </div>
 
@@ -91,12 +83,12 @@
                             <label class="form-label">
                                 လောင်စာအမျိုးအစား (fuel_type) <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select" id="fuel_type" name="fuel_type" required>
-                                <option value="" selected disabled>လောင်စာ ရွေးပါ</option>
-                                <option value="Petrol">Petrol (ဓာတ်ဆီ)</option>
-                                <option value="Diesel">Diesel (ဒီဇယ်)</option>
-                                <option value="Hybrid">Hybrid (ဟိုက်ဘရစ်)</option>
-                                <option value="Electric">Electric (လျှပ်စစ်-EV)</option>
+                            <select th:field="*{fuelType}" class="form-select" id="fuel_type" name="fuel_type" required>
+                                <option value="CHOOSEFULE" selected disabled>လောင်စာ ရွေးပါ</option>
+                                <option value="PETROL">Petrol (ဓာတ်ဆီ)</option>
+                                <option value="DIESEL">Diesel (ဒီဇယ်)</option>
+                                <option value="HYBRID">Hybrid (ဟိုက်ဘရစ်)</option>
+                                <option value="ELECTRIC">Electric (လျှပ်စစ်-EV)</option>
                             </select>
                             <div class="invalid-feedback">လောင်စာအမျိုးအစား ရွေးချယ်ပါ။</div>
                         </div>
@@ -114,7 +106,7 @@
                             <label class="form-label">
                                 ကားအမျိုးအစား Brand (car_brand) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control" id="car_brand" name="car_brand" placeholder="ဥပမာ - Toyota" required>
+                            <input th:field="*{carbrand}" type="text" class="form-control" id="car_brand" name="car_brand" placeholder="ဥပမာ - Toyota" required>
                             <div class="invalid-feedback">Brand ဖြည့်သွင်းပါ။</div>
                         </div>
 
@@ -123,7 +115,7 @@
                             <label class="form-label">
                                 ကား Model (car_model) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control" id="car_model" name="car_model" placeholder="ဥပမာ - Corolla" required>
+                            <input th:field="*{carmodel}" type="text" class="form-control" id="car_model" name="car_model" placeholder="ဥပမာ - Corolla" required>
                             <div class="invalid-feedback">Model ဖြည့်သွင်းပါ။</div>
                         </div>
 
@@ -132,7 +124,7 @@
                             <label class="form-label">
                                 ထုတ်လုပ်သည့်နှစ် (manufacture_year) <span class="text-danger">*</span>
                             </label>
-                            <input type="number" class="form-control" id="manufacture_year" name="manufacture_year" placeholder="2020" min="1950" max="2026" required>
+                            <input th:field="*{manafactureyear}" type="number" class="form-control" id="manufacture_year" name="manufacture_year" placeholder="2020" min="1950" max="2026" required>
                             <div class="invalid-feedback">ခုနှစ် မှန်ကန်စွာ ဖြည့်ပါ။</div>
                         </div>
 
@@ -141,7 +133,7 @@
                             <label class="form-label">
                                 ကားအရောင် (color) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control" id="color" name="color" placeholder="ဥပမာ - White / Silver" required>
+                            <input th:field="*{carcolor}" type="text" class="form-control" id="color" name="color" placeholder="ဥပမာ - White / Silver" required>
                             <div class="invalid-feedback">အရောင် ဖြည့်သွင်းပါ။</div>
                         </div>
 
@@ -150,7 +142,7 @@
                             <label class="form-label">
                                 ကိုယ်ထည်အမှတ် (chassis_number) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control font-monospace" id="chassis_number" name="chassis_number" placeholder="NCP160-1234567" required>
+                            <input th:field="*{chassisnum}" type="text" class="form-control font-monospace" id="chassis_number" name="chassis_number" placeholder="NCP160-1234567" required>
                             <div class="invalid-feedback">ကိုယ်ထည်အမှတ် ဖြည့်သွင်းပါ။</div>
                         </div>
 
@@ -159,7 +151,7 @@
                             <label class="form-label">
                                 အင်ဂျင်အမှတ် (engine_number) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control font-monospace" id="engine_number" name="engine_number" placeholder="1NR-1234567" required>
+                            <input th:field="*{enginenum}" type="text" class="form-control font-monospace" id="engine_number" name="engine_number" placeholder="1NR-1234567" required>
                             <div class="invalid-feedback">အင်ဂျင်အမှတ် ဖြည့်သွင်းပါ။</div>
                         </div>
                     </div>
@@ -176,7 +168,7 @@
                                 ကားဓာတ်ပုံ (Vehicle Image Upload)
                             </label>
                             <div class="upload-box" onclick="document.getElementById('carPhotoInput').click()">
-                                <input type="file" id="carPhotoInput" accept="image/*" class="d-none" onchange="previewImage(this, 'carPhotoPreview', 'carPhotoPlaceholder')">
+                                <input th:field="*{carimage}" type="file" id="carPhotoInput" accept="image/*" class="d-none" onchange="previewImage(this, 'carPhotoPreview', 'carPhotoPlaceholder')">
                                 <div id="carPhotoPlaceholder">
                                     <i class="fa-solid fa-car-side fs-2 text-danger mb-2"></i>
                                     <span class="d-block fw-semibold text-dark" style="font-size: 0.85rem;">ကားဓာတ်ပုံ တင်ရန် နှိပ်ပါ</span>
