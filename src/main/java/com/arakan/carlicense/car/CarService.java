@@ -67,4 +67,76 @@ public class CarService {
 		// database save
 		return carRepo.save(car);
 	}
+	
+	// ======================================
+	// find by car id
+	// ======================================
+	public Car findById(Long id) {
+		return carRepo.findById(id).orElseThrow(() -> new RuntimeException("Car not found"));
+	}
+	
+	// ======================================
+	// car update method
+	// ======================================
+	public Car update(
+			Long id,
+			CarDto carDto,
+			Long ownerId) {
+		
+		// owner find by id
+		Car car = carRepo.findById(id).orElseThrow(()-> new RuntimeException("car id not found"));
+		
+		// owner find by id
+		Owner owner = ownerRepo.findById(ownerId).orElseThrow(() -> new RuntimeException("Owner Update not found"));
+		
+		// old image filename တွေကို အရင်သိမ်းမယ်
+		String oldImage = car.getCarimage();
+		
+		// to save car data
+		car.setOwner(owner);
+		car.setPlatenum(carDto.getPlatenum());
+		car.setVehicle(carDto.getVehicle());
+		car.setFuelType(carDto.getFuelType());
+		car.setCarbrand(carDto.getCarbrand());
+		car.setCarmodel(carDto.getCarmodel());
+		car.setManafactureyear(carDto.getManafactureyear());
+		car.setCarcolor(carDto.getCarcolor());
+		car.setChassisnum(carDto.getChassisnum());
+		car.setEnginenum(carDto.getEnginenum());
+		
+		// Image Service for Car Image
+			try {// image ကို saveပြီး filename ယူခြင်း
+				if(carDto.getCarimage() != null && !carDto.getCarimage().isEmpty()) {
+				String carImage = imageService.saveCarImage(carDto.getCarimage());
+				car.setCarimage(carImage);
+				}
+			
+			
+		Car updateCar = carRepo.save(car);
+		
+		// Database update အောင်မြင်ကေ ပုံ‌ဟောင်းကိုဖျက်မယ်
+		if(carDto.getCarimage() !=null && !carDto.getCarimage().isEmpty()) {
+			imageService.deleteCarImage(oldImage);
+		}
+		return updateCar;
+			}catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Faild to stroe image file");
+		}
+	}
+	
+	// =================================
+	// car delete
+	// =================================
+	public void delete(Long id) {
+		Car car = carRepo.findById(id).orElseThrow(() -> new RuntimeException("Car id not found!"));
+		
+		try {
+			imageService.deleteCarImage(car.getCarimage());
+			carRepo.delete(car);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Failed to delete car image :" + e.getMessage(), e);
+		}
+	}
 }
