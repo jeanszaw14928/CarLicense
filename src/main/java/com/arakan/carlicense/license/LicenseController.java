@@ -32,7 +32,7 @@ public class LicenseController {
 		List<License> licenses = licenseSer.licenseList();
 		
 		model.addAttribute("licenses",licenses);
-		return "/license/license";
+		return "license/license";
 	}
 	
 	// =================================
