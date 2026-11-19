@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="my" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Update Car - Car License Registration System</title>
+    <div th:replace="~{fragments/formlink :: links}"></div>
+
+</head>
+<body class="py-4 py-md-5">
+
+    <div class="container" style="max-width: 900px;">
+        
+        <!-- Form Container Card -->
+        <div class="form-card">
+            
+            <!-- Card Header -->
+            <div class="form-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h5 mb-1 text-white fw-bold">
+                        <i class="fa-solid fa-file-invoice me-2 text-danger"></i>မော်တော်ယာဉ်လိုင်စင်အသစ် ထည့်သွင်းရန် (Add New License)
+                    </h1>
+                    <small class="text-white-50" style="font-size: 0.78rem;">Licenses Database Table Form Structure</small>
+                </div>
+                <div class="d-none d-sm-block text-end">
+                    <span class="badge bg-danger px-3 py-2 rounded-pill fw-semibold">
+                        <i class="fa-solid fa-database me-1"></i> 1 : Many Linked
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-4 p-md-5">
+                <form id="licenseForm" th:action="@{/license/update/{id}(id=${license.id})}" th:object="${licenseDto}" method="post">
+                    
+                    <!-- SECTION: Database Fields -->
+                    <div class="section-title d-flex align-items-center">
+                        <span class="section-badge">1</span>
+                        <span>လိုင်စင်ဇယား အချက်အလက်များ (Licenses Schema Fields)</span>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- license_id (PK) -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                လိုင်စင်စဉ် (license_id - PK)
+                            </label>
+                            <input type="text" class="form-control bg-light" id="license_id" name="license_id" value="Auto Generated" readonly>
+                        </div>
+
+                        <!-- car_id (FK) -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                ယာဉ်ရွေးချယ်ရန် (car_id - Foreign Key) <span class="text-danger">*</span>
+                            </label>
+                            <select th:field="*{carId}" class="form-select" required>
+                                <option value="" selected disabled>ယာဉ် ရွေးချယ်ပါ (Select Car)</option>
+                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.platenum +'-' + car.carmodel+' '+car.carbrand}">9A-1234 - Toyota Corolla</option>
+                                
+                            </select>
+                            <div class="invalid-feedback">ကျေးဇူးပြု၍ ယာဉ် ရွေးချယ်ပါ။</div>
+                        </div>
+
+                        <!-- license_number -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                လိုင်စင်အမှတ် (license_number) <span class="text-danger">*</span>
+                            </label>
+                            <input th:field="*{licensenum}" type="text" class="form-control font-monospace" id="license_number" name="license_number" placeholder="ဥပမာ - LIC-00001" required>
+                            <div class="invalid-feedback">လိုင်စင်အမှတ် ဖြည့်သွင်းပါ။</div>
+                        </div>
+
+                        <!-- status -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                လိုင်စင်အခြေအနေ (status) <span class="text-danger">*</span>
+                            </label>
+                            <select th:field="*{status}" class="form-select" id="status" name="status" required>
+                                <option value="ACTIVE" selected>Active (သက်ဝင်ဆဲ)</option>
+                                <option value="SUSPENDED">Suspended (ရပ်ဆိုင်းထား)</option>
+                                <option value="EXPIRED">Expired (သက်တမ်းကုန်)</option>
+                                
+                            </select>
+                            <div class="invalid-feedback">အခြေအနေ ရွေးချယ်ပါ။</div>
+                        </div>
+
+                        <!-- Issue Date -->
+<div class="col-12 col-md-6">
+
+    <label class="form-label">
+        ထုတ်ပေးသည့်ရက်စွဲ (issue_date)
+    </label>
+
+    <input type="date"
+           th:field="*{issueDate}"
+           class="form-control"
+           id="issue_date"
+           required>
+
+    <div class="text-danger"
+         th:if="${#fields.hasErrors('issueDate')}"
+         th:errors="*{issueDate}">
+    </div>
+
+</div>
+
+<!-- Expiry Date -->
+<div class="col-12 col-md-6">
+
+    <label class="form-label">
+        သက်တမ်းကုန်ဆုံးမည့်ရက်စွဲ (expiry_date)
+    </label>
+
+    <input type="date"
+           th:field="*{expiryDate}"
+           class="form-control"
+           id="expiry_date"
+           required>
+
+    <div class="text-danger"
+         th:if="${#fields.hasErrors('expiryDate')}"
+         th:errors="*{expiryDate}">
+    </div>
+
+</div>
+
+                        <!-- remarks -->
+                        <div class="col-12">
+                            <label class="form-label">
+                                မှတ်ချက် / အထူးအချက်များ (remarks)
+                            </label>
+                            <textarea th:field="*{remarks}" class="form-control" id="remarks" name="remarks" rows="3" placeholder="အထူးမှတ်ချက်များ ရေးသားရန်..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex align-items-center justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-reset" onclick="resetForm()">
+                            <i class="fa-solid fa-rotate-left me-1"></i> ပြန်စမည် (Reset)
+                        </button>
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fa-solid fa-floppy-disk me-2"></i> လိုင်စင်သိမ်းဆည်းမည် (Save License)
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="successToast" class="toast align-items-center text-white bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center">
+                    <i class="fa-solid fa-circle-check fs-4 me-3"></i>
+                    <div>
+                        <strong class="d-block">အောင်မြင်ပါသည်![cite: 4]</strong>
+                        <small>လိုင်စင် အချက်အလက်များကို Database သို့ သိမ်းဆည်းပြီးပါပြီ။[cite: 4]</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script th:src="@{/js/car.js}"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const issueDate = document.getElementById("issue_date");
+        const expiryDate = document.getElementById("expiry_date");
+
+        function updateExpiryMin() {
+
+            expiryDate.min = issueDate.value;
+
+            if (expiryDate.value &&
+                expiryDate.value < issueDate.value) {
+
+                expiryDate.value = "";
+            }
+        }
+
+        issueDate.addEventListener("change", updateExpiryMin);
+
+        updateExpiryMin();
+
+    });
+    </script>
+</body>
+</html>

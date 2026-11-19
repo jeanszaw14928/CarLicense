@@ -2,8 +2,10 @@ package com.arakan.carlicense.license;
 
 import java.time.LocalDate;
 
+
 import com.arakan.carlicense.car.Car;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,10 +33,11 @@ public class License {
 	@JoinColumn(name="car_id")
 	private Car car;
 	
+	@Column(nullable = false)
 	private String licensenum;
 	
 	@Enumerated(EnumType.STRING)
-	private LicenseStatus status = LicenseStatus.ACTIVE;
+	private LicenseStatus status = LicenseStatus.ACTIVE;	
 	private LocalDate issueDate;
 	private LocalDate expiryDate;
 	private String remarks;

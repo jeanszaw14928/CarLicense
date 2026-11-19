@@ -59,22 +59,22 @@
 				</div>
 				
 				<!-- update message -->
-				<div th:if="${successupdate}"
+				<div th:if="${updates}"
 				class="alert alert-success alert-dismissible fade show"
 				role="alert">
 					<i class="fa-solid fa-circle-check me-2"></i>
-					<span th:text="${successupdate}"></span>
+					<span th:text="${updates}"></span>
 					
 					<button type="button"
 					class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 				
 				<!-- Delete Message -->
-				<div th:if="${deleteMessage}"
+				<div th:if="${deletemessage}"
 				class="alert alert-success alert-dismissible fade show"
 				role="alert">
 					<i class="fa-solid fa-circle-check me-2"></i>
-					<span th:text="${deleteMessage}"></span>
+					<span th:text="${deletemessage}"></span>
 					
 					<button type="button"
 					class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -107,12 +107,12 @@
 											<td th:text="${license.remarks}"></td>
 											<td class="text-center d-flex">
 											
-											<a href=""
+											<a th:href="@{/license/edit/{id}(id=${license.id})}"
 												class="btn btn-sm btn-outline-primary me-1"> <i
 													class="fa-solid fa-pen-to-square"></i>
 											</a> 
 											<!-- delete form start -->
-												<form>
+												<form th:action="@{/license/delete/{id}(id=${license.id})}" method="post">
 													<button class="btn btn-sm btn-outline-danger">
 														<i class="fa-solid fa-trash"></i>
 													</button>

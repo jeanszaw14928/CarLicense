@@ -66,6 +66,7 @@
                                 လိုင်စင်အမှတ် (license_number) <span class="text-danger">*</span>
                             </label>
                             <input th:field="*{licensenum}" type="text" class="form-control font-monospace" id="license_number" name="license_number" placeholder="ဥပမာ - LIC-00001" required>
+                            <div id="licenseError" class="text-danger mt-1" styel="display:none;"></div>
                             <div class="invalid-feedback">လိုင်စင်အမှတ် ဖြည့်သွင်းပါ။</div>
                         </div>
 
@@ -88,7 +89,11 @@
                             <label class="form-label">
                                 ထုတ်ပေးသည့်ရက်စွဲ (issue_date) <span class="text-danger">*</span>
                             </label>
-                            <input th:field="*{issueDate}" type="date" class="form-control" id="issue_date" name="issue_date" required>
+                            <input type="date"
+           					th:field="*{issueDate}"
+           					class="form-control"
+           					id="issue_date"
+           					required>
                             <div class="invalid-feedback">ထုတ်ပေးသည့်ရက်စွဲ ထည့်သွင်းပါ။</div>
                         </div>
 
@@ -97,7 +102,16 @@
                             <label class="form-label">
                                 သက်တမ်းကုန်ဆုံးမည့်ရက်စွဲ (expiry_date) <span class="text-danger">*</span>
                             </label>
-                            <input th:field="*{expiryDate}" type="date" class="form-control" id="expiry_date" name="expiry_date" required>
+                            <input type="date"
+           th:field="*{expiryDate}"
+           class="form-control"
+           id="expiry_date"
+           required>
+
+    <div class="text-danger"
+         th:if="${#fields.hasErrors('expiryDate')}"
+         th:errors="*{expiryDate}">
+    </div>
                             <div class="invalid-feedback">သက်တမ်းကုန်ဆုံးမည့်ရက်စွဲ ထည့်သွင်းပါ။</div>
                         </div>
 
@@ -143,5 +157,99 @@
 
     <!-- Bootstrap 5 Bundle JS -->
     <script th:src="@{/js/car.js}"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const issueDate = document.getElementById("issue_date");
+
+        const expiryDate = document.getElementById("expiry_date");
+
+        function updateExpiryMin() {
+
+            expiryDate.min = issueDate.value;
+
+            if (expiryDate.value &&
+                expiryDate.value < issueDate.value) {
+
+                expiryDate.value = "";
+            }
+        }
+
+        issueDate.addEventListener("change", updateExpiryMin);
+
+        updateExpiryMin();
+
+    });
+    
+    // license error message
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const licenseInput = document.getElementById("license_number");
+    const licenseError = document.getElementById("licenseError");
+
+    let timer;
+
+    licenseInput.addEventListener("input", function () {
+
+        clearTimeout(timer);
+
+        const number = licenseInput.value.trim();
+
+        licenseError.style.display = "none";
+        licenseInput.classList.remove("is-invalid");
+        licenseInput.setCustomValidity("");
+
+        if (number === "") {
+            return;
+        }
+
+        // ခဏစောင့်ပြီး Database ကို စစ်မယ်
+        timer = setTimeout(async function () {
+
+            try {
+
+                const response = await fetch(
+                    `/license/check-number?licensenum=${encodeURIComponent(number)}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Check failed");
+                }
+
+                const exists = await response.json();
+
+                if (exists) {
+
+                    licenseError.textContent =
+                        "ဒီ License Number ကို အသုံးပြုပြီးသား ဖြစ်ပါတယ်။";
+
+                    licenseError.style.display = "block";
+
+                    licenseInput.classList.add("is-invalid");
+
+                    licenseInput.setCustomValidity(
+                        "License Number already exists"
+                    );
+
+                } else {
+
+                    licenseError.style.display = "none";
+
+                    licenseInput.classList.remove("is-invalid");
+
+                    licenseInput.setCustomValidity("");
+                }
+
+            } catch (error) {
+                console.error("License check error:", error);
+            }
+
+        }, 400);
+
+    });
+
+});
+
+    </script>
 </body>
 </html>
